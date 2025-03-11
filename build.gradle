@@ -1,0 +1,29 @@
+plugins {
+    // Core Gradle plugins do not require a version
+    id 'application'
+    id "org.springframework.boot" version "2.7.0"
+}
+
+application {
+    mainClass = 'com.leon.Main'
+}
+
+group 'com.leon'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
