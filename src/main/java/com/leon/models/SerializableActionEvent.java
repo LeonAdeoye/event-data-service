@@ -15,8 +15,18 @@ public record SerializableActionEvent(
     String payload
 )
 {
-    public SerializableActionEvent(ActionEvent actionEvent)
-    {
-        this(actionEvent.testRunId(), actionEvent.index(), actionEvent.type(), actionEvent.payload().toString());
+    public SerializableActionEvent(ActionEvent actionEvent) {
+        this(actionEvent.testRunId(), actionEvent.index(), actionEvent.type(), actionEvent.payload() != null ? actionEvent.payload().toString() : "{}");
+    }
+
+    public SerializableActionEvent() {
+        this(new ActionEvent());
+    }
+
+    public SerializableActionEvent(UUID testRunId, int index, String type, String payload) {
+        this.testRunId = testRunId;
+        this.index = index;
+        this.type = type;
+        this.payload = payload;
     }
 }

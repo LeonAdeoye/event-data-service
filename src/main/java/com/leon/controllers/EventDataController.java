@@ -22,6 +22,7 @@ public class EventDataController {
     @CrossOrigin
     @RequestMapping(method = GET, produces = "application/json")
     public ResponseEntity<List<ActionEvent>> getAllActionEvents() {
+        logger.info("Received request to retrieve all action events.");
         return new ResponseEntity<>(actionEventService.getAllActionEvents(), HttpStatus.OK);
     }
 
@@ -32,6 +33,7 @@ public class EventDataController {
             logger.error("Cannot get all action events for test run because test run ID is null or empty");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        logger.info("Received request to retrieve action events with test run Id: " + testRunId);
         return new ResponseEntity<>(actionEventService.getActionEventsForTestRun(testRunId), HttpStatus.OK);
     }
 
@@ -42,7 +44,8 @@ public class EventDataController {
             logger.error("Cannot save because action event is invalid");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<ActionEvent>(actionEventService.save(actionEvent), HttpStatus.CREATED);
+        logger.info("Received request to save action event: " + actionEvent);
+        return new ResponseEntity<>(actionEventService.save(actionEvent), HttpStatus.CREATED);
     }
 
     @CrossOrigin
@@ -52,7 +55,7 @@ public class EventDataController {
             logger.error("Cannot delete because test run ID is null or empty");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        logger.info("Deleting test run with ID: " + testRunId);
+        logger.info("Received request to delete action events with test run Id: " + testRunId);
         return new ResponseEntity<>(actionEventService.delete(testRunId), HttpStatus.OK);
     }
 }
