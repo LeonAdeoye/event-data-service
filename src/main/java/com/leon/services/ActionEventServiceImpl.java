@@ -28,4 +28,10 @@ public class ActionEventServiceImpl implements ActionEventService {
     public List<ActionEvent> getAllActionEvents() {
         return actionEventRepository.findAll().stream().map(ActionEvent::new).toList();
     }
+
+    public List<ActionEvent> getActionEventsForTestRun(String testRunId) {
+        return actionEventRepository.findAll().stream()
+                .filter(actionEvent -> actionEvent.testRunId().toString().equals(testRunId))
+                .map(ActionEvent::new).toList();
+    }
 }

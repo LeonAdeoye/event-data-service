@@ -24,7 +24,7 @@ public record ActionEvent (
     }
 
     public ActionEvent(SerializableActionEvent serializableActionEvent) {
-        this(serializableActionEvent.actionEventId().testRunId(), serializableActionEvent.actionEventId().index(), serializableActionEvent.type(), serializableActionEvent.payload(), LocalDateTime.now());
+        this(serializableActionEvent.testRunId(), serializableActionEvent.index(), serializableActionEvent.type(), serializableActionEvent.payload(), LocalDateTime.now());
     }
 
     public static boolean isValid(ActionEvent actionEvent)

@@ -6,8 +6,7 @@ import java.util.List;
 
 public interface ActionEventService {
     List<ActionEvent> delete(String testRunId);
-
     ActionEvent save(ActionEvent actionEvent);
-
     List<ActionEvent> getAllActionEvents();
+    List<ActionEvent> getActionEventsForTestRun(String testRunId);
 }
