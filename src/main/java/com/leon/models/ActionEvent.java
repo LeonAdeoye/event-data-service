@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public record ActionEvent (
-        UUID testRunId,
+        UUID id,
         String type,
         int index,
         JsonNode payload,
@@ -25,8 +25,8 @@ public record ActionEvent (
         this(UUID.randomUUID(), "", 0, JsonNodeFactory.instance.objectNode(), LocalDateTime.now());
     }
 
-    public ActionEvent(UUID testRunId, String type, int index, JsonNode payload, LocalDateTime runTime) {
-        this.testRunId = testRunId;
+    public ActionEvent(UUID id, String type, int index, JsonNode payload, LocalDateTime runTime) {
+        this.id = id;
         this.type = type;
         this.index = index;
         this.payload = payload;
@@ -34,7 +34,7 @@ public record ActionEvent (
     }
 
     public ActionEvent(SerializableActionEvent serializableActionEvent) {
-        this(serializableActionEvent.testRunId(), serializableActionEvent.type(), serializableActionEvent.index(),
+        this(serializableActionEvent.id(), serializableActionEvent.type(), serializableActionEvent.index(),
                 (null != serializableActionEvent.payload() ? ActionEvent.parseNode(serializableActionEvent.payload()) : JsonNodeFactory.instance.objectNode()),
                 LocalDateTime.now());
     }
@@ -54,7 +54,7 @@ public record ActionEvent (
             logger.error("Action event is null");
             return false;
         }
-        if(actionEvent.testRunId() == null) {
+        if(actionEvent.id() == null) {
             logger.error("Action event test run Id is null");
             return false;
         }

@@ -9,22 +9,22 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document("ActionEvent")
 public record SerializableActionEvent(
-    @Id UUID testRunId,
+    @Id UUID id,
     int index,
     String type,
     String payload
 )
 {
     public SerializableActionEvent(ActionEvent actionEvent) {
-        this(actionEvent.testRunId(), actionEvent.index(), actionEvent.type(), actionEvent.payload() != null ? actionEvent.payload().toString() : "{}");
+        this(actionEvent.id(), actionEvent.index(), actionEvent.type(), actionEvent.payload() != null ? actionEvent.payload().toString() : "{}");
     }
 
     public SerializableActionEvent() {
         this(new ActionEvent());
     }
 
-    public SerializableActionEvent(UUID testRunId, int index, String type, String payload) {
-        this.testRunId = testRunId;
+    public SerializableActionEvent(UUID id, int index, String type, String payload) {
+        this.id = id;
         this.index = index;
         this.type = type;
         this.payload = payload;
