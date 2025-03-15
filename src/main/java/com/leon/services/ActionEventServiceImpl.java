@@ -5,7 +5,6 @@ import com.leon.models.SerializableActionEvent;
 import com.leon.repositories.ActionEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +29,6 @@ public class ActionEventServiceImpl implements ActionEventService {
     }
 
     public List<ActionEvent> getActionEventsForTestRun(String testRunId) {
-        return actionEventRepository.findAllByActionEventId_Id(UUID.fromString(testRunId)).stream()
-                .map(ActionEvent::new).toList();
+        return actionEventRepository.findAllByActionEventId_Id(UUID.fromString(testRunId)).stream().map(ActionEvent::new).toList();
     }
 }

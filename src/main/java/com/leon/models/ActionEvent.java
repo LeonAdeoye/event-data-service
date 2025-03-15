@@ -18,19 +18,6 @@ public record ActionEvent (
 ) {
     private static final Logger logger = LoggerFactory.getLogger(ActionEvent.class.getName());
 
-    public ActionEvent()
-    {
-        this(UUID.randomUUID(), "", 0, JsonNodeFactory.instance.objectNode(), LocalDateTime.now());
-    }
-
-    public ActionEvent(UUID id, String type, int index, JsonNode payload, LocalDateTime runTime) {
-        this.id = id;
-        this.type = type;
-        this.index = index;
-        this.payload = payload;
-        this.runTime = runTime;
-    }
-
     public ActionEvent(SerializableActionEvent serializableActionEvent) {
         this(serializableActionEvent.actionEventId().id(), serializableActionEvent.type(), serializableActionEvent.actionEventId().index(),
                 (null != serializableActionEvent.payload() ? ActionEvent.parseNode(serializableActionEvent.payload()) : JsonNodeFactory.instance.objectNode()),
