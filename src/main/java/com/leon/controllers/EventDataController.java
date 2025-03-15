@@ -50,7 +50,7 @@ public class EventDataController {
 
     @CrossOrigin
     @RequestMapping(method = DELETE, produces = "application/json")
-    public ResponseEntity<List<ActionEvent>> deleteTestRun(String testRunId) {
+    public ResponseEntity<List<ActionEvent>> deleteTestRun(@RequestParam String testRunId) {
         if(testRunId == null || testRunId.isEmpty()) {
             logger.error("Cannot delete because test run ID is null or empty");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

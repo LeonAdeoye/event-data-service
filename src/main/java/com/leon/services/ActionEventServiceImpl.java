@@ -15,7 +15,7 @@ public class ActionEventServiceImpl implements ActionEventService {
     private ActionEventRepository actionEventRepository;
     @Override
     public List<ActionEvent> delete(String testRunId) {
-        actionEventRepository.deleteById(UUID.fromString(testRunId));
+        actionEventRepository.deleteByActionEventId_Id(UUID.fromString(testRunId));
         return getAllActionEvents();
     }
 
@@ -30,8 +30,7 @@ public class ActionEventServiceImpl implements ActionEventService {
     }
 
     public List<ActionEvent> getActionEventsForTestRun(String testRunId) {
-        return actionEventRepository.findAll().stream()
-                .filter(actionEvent -> actionEvent.id().toString().equals(testRunId))
+        return actionEventRepository.findAllByActionEventId_Id(UUID.fromString(testRunId)).stream()
                 .map(ActionEvent::new).toList();
     }
 }

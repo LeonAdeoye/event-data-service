@@ -3,10 +3,8 @@ package com.leon.models;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +32,7 @@ public record ActionEvent (
     }
 
     public ActionEvent(SerializableActionEvent serializableActionEvent) {
-        this(serializableActionEvent.id(), serializableActionEvent.type(), serializableActionEvent.index(),
+        this(serializableActionEvent.actionEventId().id(), serializableActionEvent.type(), serializableActionEvent.actionEventId().index(),
                 (null != serializableActionEvent.payload() ? ActionEvent.parseNode(serializableActionEvent.payload()) : JsonNodeFactory.instance.objectNode()),
                 LocalDateTime.now());
     }
