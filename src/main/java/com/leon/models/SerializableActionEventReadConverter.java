@@ -4,6 +4,9 @@ import org.bson.Document;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.stereotype.Component;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.UUID;
 
 @Component
@@ -17,6 +20,12 @@ public class SerializableActionEventReadConverter implements Converter<Document,
         ActionEventId actionEventId = new ActionEventId(testRunId, index);
         String type = source.getString("type");
         String payload = source.getString("payload");
-        return new SerializableActionEvent(actionEventId, type, payload);
+        Date date = source.getDate("runTime");
+        LocalDateTime runTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        String testRunDescription = source.getString("testRunDescription");
+        String testRunnerName = source.getString("testRunnerName");
+        String prevState = source.getString("prevState");
+        String nextState = source.getString("nextState");
+        return new SerializableActionEvent(actionEventId, type, payload, runTime, testRunDescription, testRunnerName, prevState, nextState);
     }
 }

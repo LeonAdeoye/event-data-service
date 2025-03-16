@@ -22,7 +22,6 @@ public class EventDataController {
     @CrossOrigin
     @RequestMapping(method = GET, produces = "application/json")
     public ResponseEntity<List<ActionEvent>> getAllActionEvents() {
-        logger.info("Received request to retrieve all action events.");
         return new ResponseEntity<>(actionEventService.getAllActionEvents(), HttpStatus.OK);
     }
 
