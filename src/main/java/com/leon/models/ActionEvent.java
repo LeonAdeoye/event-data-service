@@ -25,7 +25,7 @@ public record ActionEvent (
     public ActionEvent(SerializableActionEvent serializableActionEvent) {
         this(serializableActionEvent.actionEventId().id(), serializableActionEvent.type(), serializableActionEvent.actionEventId().index(),
                 (null != serializableActionEvent.payload() ? ActionEvent.parseNode(serializableActionEvent.payload()) : JsonNodeFactory.instance.objectNode()),
-                LocalDateTime.now(), serializableActionEvent.testRunDescription(), serializableActionEvent.testRunnerName(),
+                serializableActionEvent.runTime(), serializableActionEvent.testRunDescription(), serializableActionEvent.testRunnerName(),
                 (null != serializableActionEvent.prevState() ? ActionEvent.parseNode(serializableActionEvent.prevState()) : JsonNodeFactory.instance.objectNode()),
                 (null != serializableActionEvent.nextState() ? ActionEvent.parseNode(serializableActionEvent.nextState()) : JsonNodeFactory.instance.objectNode()));
     }

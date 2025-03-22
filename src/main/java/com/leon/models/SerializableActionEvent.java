@@ -23,13 +23,13 @@ public record SerializableActionEvent(
 {
     public SerializableActionEvent(ActionEvent actionEvent) {
         this(new ActionEventId(actionEvent.id(), actionEvent.index()),
-                actionEvent.type(),
-                actionEvent.payload() != null ? actionEvent.payload().toString() : "{}",
-                actionEvent.runTime(),
-                actionEvent.testRunDescription(),
-                actionEvent.testRunnerName(),
-                actionEvent.prevState() != null ? actionEvent.prevState().toString() : "{}",
-                actionEvent.nextState() != null ? actionEvent.nextState().toString() : "{}");
+            actionEvent.type(),
+            actionEvent.payload() != null ? actionEvent.payload().toString() : "{}",
+            actionEvent.runTime(),
+            actionEvent.testRunDescription(),
+            actionEvent.testRunnerName(),
+            actionEvent.prevState() != null ? actionEvent.prevState().toString() : "{}",
+            actionEvent.nextState() != null ? actionEvent.nextState().toString() : "{}");
     }
 
     public SerializableActionEvent(ActionEventId actionEventId, String type, String payload, LocalDateTime runTime, String testRunDescription, String testRunnerName, String prevState, String nextState) {
