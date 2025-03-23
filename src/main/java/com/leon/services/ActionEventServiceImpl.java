@@ -61,10 +61,9 @@ public class ActionEventServiceImpl implements ActionEventService {
     private static JsonNode compare(List<ActionEvent> firstTestRunActionEvents, List<ActionEvent> secondTestRunActionEvents) {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode diffSummary = objectMapper.createArrayNode();
-        ArrayNode differences = objectMapper.createArrayNode();
 
         for(int index = 0; index < firstTestRunActionEvents.size(); ++index) {
-
+            ArrayNode differences = objectMapper.createArrayNode();
             ActionEvent firstTestRunActionEvent = firstTestRunActionEvents.get(index);
             ActionEvent secondTestRunActionEvent = secondTestRunActionEvents.get(index);
 
