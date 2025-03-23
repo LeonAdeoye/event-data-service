@@ -1,5 +1,6 @@
 package com.leon.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.leon.models.ActionEvent;
 import com.leon.services.ActionEventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,21 @@ public class EventDataController {
         }
         logger.info("Received request to retrieve action events with test run Id: " + testRunId);
         return new ResponseEntity<>(actionEventService.getActionEventsForTestRun(testRunId), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value="/compare", produces = "application/json", method=GET)
+    public ResponseEntity<JsonNode> compare(@RequestParam String firstTestRunId, @RequestParam String secondTestRunId) {
+        if(firstTestRunId == null || firstTestRunId.isEmpty()) {
+            logger.error("Cannot compare because first test run ID is null or empty");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(secondTestRunId == null || secondTestRunId.isEmpty()) {
+            logger.error("Cannot compare because second test run ID is null or empty");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        logger.info("Received request to compare test run: " + firstTestRunId + " with test run: " + secondTestRunId);
+        return new ResponseEntity<>(actionEventService.compare(firstTestRunId, secondTestRunId), HttpStatus.OK);
     }
 
     @CrossOrigin
