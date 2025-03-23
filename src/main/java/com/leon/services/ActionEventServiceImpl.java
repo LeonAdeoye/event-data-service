@@ -49,7 +49,15 @@ public class ActionEventServiceImpl implements ActionEventService {
 
         return compare(firstTestRunActionEvents, secondTestRunActionEvents);
     }
-
+    private static void addStateDifference(String stateType, JsonNode firstState, JsonNode secondState, ArrayNode differences, ObjectMapper objectMapper) {
+        if (!firstState.equals(secondState)) {
+            ObjectNode stateDifference = objectMapper.createObjectNode();
+            stateDifference.set("first", firstState);
+            stateDifference.set("second", secondState);
+            stateDifference.put("state", stateType);
+            differences.add(stateDifference);
+        }
+    }
     private static JsonNode compare(List<ActionEvent> firstTestRunActionEvents, List<ActionEvent> secondTestRunActionEvents) {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode diffSummary = objectMapper.createArrayNode();
@@ -65,20 +73,9 @@ public class ActionEventServiceImpl implements ActionEventService {
             if(!firstTestRunActionEvent.payload().equals(secondTestRunActionEvent.payload()))
                 throw new IllegalArgumentException("The payload of action event at index " + index + " is different between the two test runs.");
 
-            if(!firstTestRunActionEvent.nextState().equals(secondTestRunActionEvent.nextState())) {
-                ObjectNode newStateDifference = objectMapper.createObjectNode();
-                newStateDifference.set("first", firstTestRunActionEvent.nextState());
-                newStateDifference.set("second", secondTestRunActionEvent.nextState());
-                newStateDifference.put("state", "next");
-                differences.add(newStateDifference);
-            }
-            if(!firstTestRunActionEvent.prevState().equals(secondTestRunActionEvent.prevState())) {
-                ObjectNode previousStateDifference = objectMapper.createObjectNode();
-                previousStateDifference.set("first", firstTestRunActionEvent.prevState());
-                previousStateDifference.set("second", secondTestRunActionEvent.prevState());
-                previousStateDifference.put("state", "previous");
-                differences.add(previousStateDifference);
-            }
+            addStateDifference("next", firstTestRunActionEvent.nextState(), secondTestRunActionEvent.nextState(), differences, objectMapper);
+            addStateDifference("previous", firstTestRunActionEvent.prevState(), secondTestRunActionEvent.prevState(), differences, objectMapper);
+
             if(differences.size() > 0) {
                 ObjectNode parent = objectMapper.createObjectNode();
                 parent.put("type", firstTestRunActionEvent.type());
